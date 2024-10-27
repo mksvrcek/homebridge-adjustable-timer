@@ -1,17 +1,17 @@
 {
   "name": "@theproductroadmap/homebridge-adjustable-timer",
   "version": "0.9.1",
-  "description": "Dummy switches for Homebridge: https://github.com/mksvrcek/homebridge-timer",
+  "description": "Dummy switches for Homebridge: https://github.com/mksvrcek/homebridge-adjustable-timer",
   "license": "ISC",
   "keywords": [
     "homebridge-plugin"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/mksvrcek/homebridge-timer.git"
+    "url": "git://github.com/mksvrcek/homebridge-adjustable-timer.git"
   },
   "bugs": {
-    "url": "https://github.com/mksvrcek/homebridge-timer/issues"
+    "url": "https://github.com/mksvrcek/homebridge-adjustable-timer/issues"
   },
   "engines": {
     "node": ">=0.12.0",
