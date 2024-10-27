@@ -19,7 +19,7 @@
                 "description": "Starting timer (brightness) everytime the switch is on."
             },
             "delayUnit": {
-                "title": "Delay Time Unit",
+                "title": "Delay Time Unit (WIP)",
                 "description": "Delay Time Unit (milliseconds/seconds/minutes/hours/days).",
                 "type": "string",
                 "default": "m",
