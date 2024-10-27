@@ -1,5 +1,5 @@
 {
-    "pluginAlias": "DummySwitch",
+    "pluginAlias": "DummyTimer",
     "pluginType": "accessory",
     "singular": false,
     "schema": {
@@ -10,49 +10,46 @@
                 "type": "string",
                 "required": true
             },
-            "stateful": {
-                "title": "Stateful",
-                "type": "boolean",
-                "default": false,
-                "description": "The switch remains on instead of being automatically turned off."
-            },
-            "dimmer": {
-                "title": "Dimmer",
-                "type": "boolean",
-                "default": false,
-                "description": "Make the switch a dimmer instead of a toggle (on/off) switch"
-            },
-            "reverse": {
-                "title": "Reverse",
-                "type": "boolean",
-                "default": false,
-                "description": "The switch's default state is on."
-            },
-            "time": {
-                "title": "Time",
-                "type": "number",
-                "default": 1000,
-                "description": "The switch will turn off after this number of milliseconds. Not used if the switch is stateful."
-            },
-            "random": {
-                "title": "Random",
-                "type": "boolean",
-                "default": false,
-                "description": "Randomize the time until a switch turns off. Not used if the switch is stateful."
-            },
-            "resettable": {
-                "title": "Resettable",
-                "type": "boolean",
-                "default": false,
-                "description": "The timer will reset each time the switch is turned on. "
-            },
             "brightness": {
                 "title": "Brightness",
                 "type": "integer",
                 "default": 0,
                 "placeholder": 0,
                 "maximum": 100,
-                "description": "Starting brightness (dimmer only)"
+                "description": "Starting timer (brightness) everytime the switch is on."
+            },
+            "delayUnit": {
+                "title": "Delay Time Unit",
+                "description": "Delay Time Unit (milliseconds/seconds/minutes/hours/days).",
+                "type": "string",
+                "default": "m",
+                "required": true,
+                "oneOf": [
+                    {
+                        "title": "seconds",
+                        "enum": [
+                            "s"
+                        ]
+                    },
+                    {
+                        "title": "minutes",
+                        "enum": [
+                            "m"
+                        ]
+                    },
+                    {
+                        "title": "hours",
+                        "enum": [
+                            "h"
+                        ]
+                    },
+                    {
+                        "title": "days",
+                        "enum": [
+                            "d"
+                        ]
+                    }
+                ]
             },
             "disableLogging": {
                 "title": "DisableLogging",
@@ -60,7 +57,6 @@
                 "default": false,
                 "description": "No state change information (On/Off) will be logged. "
             }
-
         }
     }
 }
