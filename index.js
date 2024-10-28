@@ -77,7 +77,7 @@ function DummyTimer(log, config) {
 DummyTimer.prototype.getServices = function () {
   var services = [this.informationService, this._service];
 
-  if (this.sensor != off) {
+  if (this.sensor != "off") {
     switch (this.sensor) {
       case 'contact':
         this.sensorService = new Service.ContactSensor(this.name + ' Trigger')
