@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.3...v1.1.4) (2024-10-28)
+
+
+### Bug Fixes
+
+* Sensor Release, Metadata Update ([12880c6](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/12880c6044a4eacbc5f5aba6890edaf7b79fed93))
+
 ## [1.1.3](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.2...v1.1.3) (2024-10-28)
 
 
