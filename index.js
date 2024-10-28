@@ -17,11 +17,23 @@ function DummyTimer(log, config) {
   this.name = config.name;
   this.dimmer = true;
   this.isTimer = true;
+  this.delay = 60000;
+  this.delayUnit = config.delayUnit;
   this.defBrightness = config.brightness;
   this.brightness = config.brightness;
   this.brightnessStorageKey = this.name + "Brightness";
   this.timer = null;
   this.disableLogging = config.disableLogging;
+
+  this.delay = (() => {
+    switch(this.delayUnit) {
+      case "s": return 1000
+      case "m": return 60000
+      case "h": return 3600000
+      case "d": return 86400000
+      default: return 60000;
+    }
+  })();
 
   if (this.dimmer) {
     this._service = new Service.Lightbulb(this.name);
@@ -105,7 +117,7 @@ DummyTimer.prototype._setOn = function (on, callback) {
           clearInterval(this.timer);
           this._service.setCharacteristic(Characteristic.On, false);
         }
-      }.bind(this), 60000)
+      }.bind(this), this.delay)
     } else {
       clearInterval(this.timer);
     }
