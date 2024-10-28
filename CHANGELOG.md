@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.1...v1.1.2) (2024-10-28)
+
+
+### Bug Fixes
+
+* error sensor type & added sensor types ([2d4c204](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/2d4c2043fa2557ced572f6442cbc7eb71e454097))
+* sensor error ([0745c38](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/0745c384c369d793355caffa3e5a0b1bf9a0317d))
+
 ## [1.1.1](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.0...v1.1.1) (2024-10-28)
 
 
