@@ -165,7 +165,7 @@ DummyTimer.prototype._setOn = function (on, callback) {
           if (this.sensor != "off") {
             this.sensorTriggered = 1
             this.sensorService.getCharacteristic(this.sensorCharacteristic).updateValue(this.getSensorState())
-            this.log.easyDebug('Triggering Sensor')
+            this.log('Triggering Sensor')
             setTimeout(function () {
               this.sensorTriggered = 0
               this.sensorService.getCharacteristic(this.sensorCharacteristic).updateValue(this.getSensorState())
