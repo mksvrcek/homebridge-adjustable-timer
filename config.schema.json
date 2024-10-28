@@ -53,7 +53,7 @@
             },
             "sensor": {
                 "title": "Enable sensor trigger",
-                "description": "Sets up a separate sensor that triggers when the timer reaches 0, this allows you to turn off the timer without triggering your automations. Alternatively you can setup a separate switch to cancel the timer (see docs).",
+                "description": "Sets up a separate sensor that triggers when the timer reaches 0, this allows you to turn off the timer without triggering your automations. Alternatively you can setup a separate switch to cancel the timer (see docs). (Warning: Leak sesonr will trigger critical notification by default that ignore silent & focus modes)",
                 "type": "string",
                 "default": "off",
                 "required": true,

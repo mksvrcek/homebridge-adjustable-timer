@@ -1,120 +1,47 @@
 
-# "Dummy Switches" Plugin
+# "Dummy Timer" Plugin
 
 Example config.json:
 
 ```
-    "accessories": [
-        {
-          "accessory": "DummySwitch",
-          "name": "My Switch 1",
-          "disableLogging": false
-        }   
-    ]
+    {
+    "name": "motion",
+    "brightness": 10,
+    "delayUnit": "s",
+    "sensor": "motion",
+    "disableLogging": false,
+    "accessory": "DummyTimer"
+}
 
 ```
 
-With this plugin, you can create any number of fake switches that will do nothing when turned on (and will automatically turn off right afterward, simulating a stateless switch). This can be very useful for advanced automation with HomeKit scenes.
+This plugin an expansion on [nfarina/homebridge-dummy](https://github.com/nfarina/homebridge-dummy), it allows you to create timers that act as dimmer lights. Once triggered the light will tick down a % every second/minute/hour/day until it reaches 0 and turns off, allowing you to setup automatizations in homekit or elsewhere.
 
-For instance, the Philips Hue app will automatically create HomeKit scenes for you based on Hue Scenes you create. But what if you want to create a scene that contains both Philips Hue actions and other actions (like turning on the coffee maker with a WeMo outlet)? You are forced to either modify the Hue-created scene (which can be a HUGE list of actions if you have lots of lights) or build your own HomeKit lighting scenes.
 
-Instead, you can link scenes using these dummy switches. Let's say you have a Hue Scene called "Rise and Shine" that you want to activate in the morning. And you have also setup the system HomeKit scene "Good Morning" to turn on your coffee maker and disarm your security system. You can add a single dummy switch to your Good Morning scene, then create a Trigger based on the switching-on of the dummy switch that also activates Rise And Shine.
+Config:
 
-If the disableLogging option is true, state changes (On/Off) will not be logged. The disableLogging option is per switch, so you can choose which ones will get log entries. If not supplied, the default value is false and state changes will be logged.
+## Sensor
+You may set the "sensor" variable to any of the following:
+ - motion
+ - contact
+ - occupancy
+ - leak
+ - off
 
-## Stateful Switches
+ Unless it's set to off the plugin will setup an additional sensor that will trigger when the timer is up. Allowing you to turn off the timer without it triggering your automations (setup your automations on the sensors activity). If you prefer no sensor you can use [nfarina/homebridge-dummy](https://github.com/nfarina/homebridge-dummy) to setup a switch that.
 
-The default behavior of a dummy switch is to turn itself off one second after being turned on. However you may want to create a dummy switch that remains on and must be manually turned off. You can do this by passing an argument in your config.json:
+ 1. turns off the timer
+ 2. turns off itself
+ (You will need to add a condition to you automation for it not to trigger when this newly created switch is on.)
 
-```
-    "accessories": [
-        {
-          "accessory": "DummySwitch",
-          "name": "My Stateful Switch 1",
-          "stateful": true
-        }   
-    ]
+ ## Brightness
+ The brightness variable specifies a value for the switch to start on, if you toggle it on it will automatically jump to this number irregardless of what it was on previously.
 
-```
+ ## Delay Unit
+ Delay unit can be set to any of the following and specifies how long will each % take.
+ - "s" Second
+ - "m" Minute
+ - "h" Hour
+ - "d" Day
 
-## Dimmer Switches
-
-By default, switches are toggle switches (on/off). You can configure your switch to be a dimmer switch, instead, storing a brightness value between 0 and 100. This can be done by passing the 'dimmer' argument in your config.json:
-
-```
-    "accessories": [
-        {
-          "accessory": "DummySwitch",
-          "name": "My Stateful Switch 1",
-          "dimmer": true
-        }
-    ]
-
-```
-
-## Reverse Switches
-
-You may also want to create a dummy switch that turns itself on one second after being turned off. This can be done by passing the 'reverse' argument in your config.json:
-
-```
-    "accessories": [
-        {
-          "accessory": "DummySwitch",
-          "name": "My Stateful Switch 1",
-          "reverse": true
-        }   
-    ]
-
-```
-
-## Timed Switches
-
-You may also want to create a timed switch that turns itself off after being on for a given time (for example, five seconds). This can be done by passing the 'time' argument in your config.json:
-
-```
-    "accessories": [
-        {
-          "accessory": "DummySwitch",
-          "name": "My Stateful Switch 1",
-          "time": 5000
-        }   
-    ]
-
-```
-
-## Resettable Timed Switches
-
-You may also want to create a timed switch that is reset each time it is activated. This way, the original timer is reset instead of creating a new timer. 
-This can be done by passing the 'resettable' argument in your config.json:
-
-```
-    "accessories": [
-        {
-          "accessory": "DummySwitch",
-          "name": "My Stateful Switch 1",
-          "time": 5000,
-          "resettable": true
-        }   
-    ]
-
-```
-
-## Random Timed Switches
-
-You might want to create a switch that given a random time turns itself off.
-This can be achieved by enabling 'random'.
-Each time a non-stateful, random timed switch is triggered, the time is set to a random value between 0 and 'time' milliseconds.
-A random period within one hour is defined as follows in your config.json:
-
-```
-    "accessories": [
-        {
-          "accessory": "DummySwitch",
-          "name": "My Stateful Random Switch 1",
-          "time": 3600000,
-          "random": true
-        }
-    ]
-
-```
-
+ *Example: If delay unit is "m" and switch brightness is 60, it will take 1 minute to trigger.*
