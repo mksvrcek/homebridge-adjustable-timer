@@ -25,6 +25,9 @@ function DummyTimer(log, config) {
   this.timer = null;
   this.disableLogging = config.disableLogging;
 
+  this.sensor = config.sensor;
+  this.isSensorOn = false;
+
   this.delay = (() => {
     switch(this.delayUnit) {
       case "s": return 1000
@@ -72,7 +75,38 @@ function DummyTimer(log, config) {
 }
 
 DummyTimer.prototype.getServices = function () {
-  return [this.informationService, this._service];
+  var services = [this.informationService, this._service];
+
+  if (this.sensor != off) {
+    switch (this.sensor) {
+      case 'contact':
+        this.sensorService = new Service.ContactSensor(this.name + ' Trigger')
+        this.sensorCharacteristic = Characteristic.ContactSensorState
+        break
+      case 'occupancy':
+        this.sensorService = new Service.OccupancySensor(this.name + ' Trigger')
+        this.sensorCharacteristic = Characteristic.OccupancyDetected
+        break
+      case 'leak':
+        this.sensorService = new Service.LeakSensor(this.name + ' Trigger')
+        this.sensorCharacteristic = Characteristic.LeakDetected
+        break
+      default:
+        this.sensorService = new Service.MotionSensor(this.name + ' Trigger')
+        this.sensorCharacteristic = Characteristic.MotionDetected
+        break
+      }
+  
+      this.sensorService
+        .getCharacteristic(this.sensorCharacteristic)
+        .on('get', (callback) => {
+          callback(null, this.getSensorState())
+        })
+  
+      services.push(this.sensorService)
+  }
+
+  return services;
 }
 
 DummyTimer.prototype._getBrightness = function (callback) {
@@ -116,6 +150,16 @@ DummyTimer.prototype._setOn = function (on, callback) {
         } else {
           clearInterval(this.timer);
           this._service.setCharacteristic(Characteristic.On, false);
+
+          if (this.sensor != "off") {
+            this.sensorTriggered = 1
+            this.sensorService.getCharacteristic(this.sensorCharacteristic).updateValue(this.getSensorState())
+            this.log.easyDebug('Triggering Sensor')
+            setTimeout(function () {
+              this.sensorTriggered = 0
+              this.sensorService.getCharacteristic(this.sensorCharacteristic).updateValue(this.getSensorState())
+            }.bind(this), 3000)
+          }
         }
       }.bind(this), this.delay)
     } else {

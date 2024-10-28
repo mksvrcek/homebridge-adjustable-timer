@@ -19,7 +19,7 @@
                 "description": "Starting timer (brightness) everytime the switch is on."
             },
             "delayUnit": {
-                "title": "Delay Time Unit (WIP)",
+                "title": "Delay Time Unit",
                 "description": "Delay Time Unit (milliseconds/seconds/minutes/hours/days).",
                 "type": "string",
                 "default": "m",
@@ -47,6 +47,27 @@
                         "title": "days",
                         "enum": [
                             "d"
+                        ]
+                    }
+                ]
+            },
+            "sensor": {
+                "title": "Enable sensor trigger",
+                "description": "Sets up a separate sensor that triggers when the timer reaches 0, this allows you to turn off the timer without triggering your automations. Alternatively you can setup a separate switch to cancel the timer (see docs).",
+                "type": "string",
+                "default": "off",
+                "required": true,
+                "oneOf": [
+                    {
+                        "title": "Motion Sensor",
+                        "enum": [
+                            "motion"
+                        ]
+                    },
+                    {
+                        "title": "Off (No sensor)",
+                        "enum": [
+                            "off"
                         ]
                     }
                 ]
