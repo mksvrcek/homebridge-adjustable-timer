@@ -77,7 +77,7 @@ function DummyTimer(log, config) {
 		const state = this.sensorTriggered
 		// if (this.flipSensor && this.sensorType === 'motion')
 		// 	return !state
-		if (this.sensorType === 'motion')
+		if (this.sensor === 'motion')
 			return !!state
 		// if (this.flipSensor)
 		// 	return state ^ 1

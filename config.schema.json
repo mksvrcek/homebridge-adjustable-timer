@@ -65,6 +65,24 @@
                         ]
                     },
                     {
+                        "title": "Contact Sensor",
+                        "enum": [
+                            "contact"
+                        ]
+                    },
+                    {
+                        "title": "Occupancy Sensor",
+                        "enum": [
+                            "occupancy"
+                        ]
+                    },
+                    {
+                        "title": "Leak Sensor",
+                        "enum": [
+                            "leak"
+                        ]
+                    },
+                    {
                         "title": "Off (No sensor)",
                         "enum": [
                             "off"
