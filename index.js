@@ -26,7 +26,7 @@ function DummyTimer(log, config) {
   this.disableLogging = config.disableLogging;
 
   this.sensor = config.sensor;
-  this.isSensorOn = false;
+  this.sensorTriggered = 0;
 
   this.delay = (() => {
     switch(this.delayUnit) {
@@ -72,6 +72,17 @@ function DummyTimer(log, config) {
       this._service.setCharacteristic(Characteristic.Brightness, cachedBrightness);
     }
   }
+
+  this.getSensorState = () => {
+		const state = this.sensorTriggered
+		// if (this.flipSensor && this.sensorType === 'motion')
+		// 	return !state
+		if (this.sensorType === 'motion')
+			return !!state
+		// if (this.flipSensor)
+		// 	return state ^ 1
+		return state
+	}
 }
 
 DummyTimer.prototype.getServices = function () {
