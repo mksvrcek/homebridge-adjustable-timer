@@ -21,6 +21,8 @@ jobs:
           node-version: "lts/*"
       - run: npm install
       - run: npm ci
+      - name: Install semantic-release plugins
+        run: npm install @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/changelog @semantic-release/npm @semantic-release/github @semantic-release/git --save-dev
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
