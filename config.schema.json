@@ -1,9 +1,13 @@
 {
-    "pluginAlias": "DummyTimer",
-    "pluginType": "accessory",
-    "singular": false,
+    "pluginAlias": "AdjustableDummyTimerPlatform",
+    "pluginType": "platform",
+    "singular": true,
     "schema": {
-        "type": "object",
+      "timers": {
+        "description": "Timers to be created.",
+        "type": "array",
+        "items": {
+                  "type": "object",
         "properties": {
             "name": {
                 "title": "Name",
@@ -97,5 +101,7 @@
                 "description": "No state change information (On/Off) will be logged. "
             }
         }
+        }
+      }
     }
 }
