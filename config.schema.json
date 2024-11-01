@@ -4,14 +4,12 @@
     "singular": true,
     "schema": {
         "name": {
-        "title": "Adjustable Timer Plaugin",
-        "type": "string",
-        "required": true,
-        "default": "AdjustableDummyTimerPlatform",
-        "placeholder": "AdjustableDummyTimerPlatform",
-        "minLength": 1,
-        "maxLength": 50
-      	},
+            "title": "Adjustable Timer Plugin Platform Name",
+            "type": "string",
+            "required": true,
+            "default": "AdjustableDummyTimerPlatform",
+            "description": "Name to use for Homebridge logging purposes. Default: AdjustableDummyTimerPlatform."
+        },
       "timers": {
         "description": "Timers to be created.",
         "type": "array",

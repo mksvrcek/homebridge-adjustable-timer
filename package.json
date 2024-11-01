@@ -6,11 +6,12 @@
   "author": "mksvrcek",
   "homepage": "https://theproductroadmap.co",
   "keywords": [
-    "homebridge-plugin",
     "timer",
     "dummy-switch",
     "adjustable",
-    "custom"
+    "custom",
+    "homebridge-plugin",
+    "homebridge"
   ],
   "repository": {
     "type": "git",
