@@ -1,12 +1,14 @@
 {
   "name": "@theproductroadmap/homebridge-adjustable-timer",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Dummy switches for Homebridge: https://github.com/mksvrcek/homebridge-adjustable-timer",
   "license": "ISC",
   "author": "mksvrcek",
   "homepage": "https://theproductroadmap.co",
   "keywords": [
-    "homebridge-plugin", "customizable timer accessory", "user adjustable timer"
+    "homebridge-plugin",
+    "customizable timer accessory",
+    "user adjustable timer"
   ],
   "repository": {
     "type": "git",
