@@ -15,6 +15,8 @@ module.exports = function (api) {
 class AdjustableDummyTimerPlatform {
     constructor(log, config, api) {
         this.accessories = [];
+        this.config = config;
+        this.api = api
         this.Service = api.hap.Service;
         this.Characteristic = api.hap.Characteristic;
         this.log = log;
@@ -22,17 +24,31 @@ class AdjustableDummyTimerPlatform {
         log.debug(config)
         
         api.on('didFinishLaunching', () => {
-            
-            
-            const uuid = api.hap.uuid.generate('AdjustableDummyTimerPlatform')
-            if (!this.accessories.find(accessory => accessory.UUID === uuid)) {
-                const platform = new api.platformAccessory('Adjustable Timer Platform', uuid);
-                api.registerPlatformAccessories('@theproductroadmap/homebridge-adjustable-timer', 'AdjustableDummyTimerPlatform', [platform])
-                this.accessories.push(platform)
-            }
+            const currentAccessoryUUIDs = [];
             
             config.timers.forEach((timer) => {
-                new DummyTimer(log, timer, api, this.accessories[0]);
+                this.log("Initializing " + timer.name);
+                const uuid = api.hap.uuid.generate(timer.name);
+                currentAccessoryUUIDs.push(uuid);
+                
+                if (!this.accessories.find(accessory => accessory.UUID === uuid)) {
+                    const platform = new api.platformAccessory(timer.name, uuid);
+                    api.registerPlatformAccessories('@theproductroadmap/homebridge-adjustable-timer', 'AdjustableDummyTimerPlatform', [platform])
+                    this.accessories.push(platform)
+                    new DummyTimer(log, timer, api, platform);
+                } else {
+                    let platform = this.accessories.find(accessory => accessory.UUID === uuid);
+                    new DummyTimer(log, timer, api, platform);
+                }
+                
+            });
+            
+            // Unregister accessories not present in the config
+            this.accessories.forEach((accessory) => {
+                if (!currentAccessoryUUIDs.includes(accessory.UUID)) {
+                    this.log("Unregistering accessory: " + accessory.displayName);
+                    api.unregisterPlatformAccessories('@theproductroadmap/homebridge-adjustable-timer', 'AdjustableDummyTimerPlatform', [accessory]);
+                }
             });
             
             log.debug('launched')
@@ -43,11 +59,10 @@ class AdjustableDummyTimerPlatform {
     }
     
     configureAccessory(accessory) {
-        this.log.debug("Configuring Accessory:" + accessory)
+        this.log.debug("Found cached accessory:" + accessory.UUID)
         this.accessories.push(accessory);
     }
 }
-
 
 class DummyTimer {
     constructor (log, config, api, platform) {
@@ -78,26 +93,28 @@ class DummyTimer {
     }
   })();
 
+
   
-//   this._service = new Service.Lightbulb(this.name);
-    this.timerRepresentative = platform.getService('Dummy-Timer-' + config.name.replace(/\s/g, '-'))
+    this.timerRepresentative = platform.getService(config.name)
     if (!this.timerRepresentative) {
         log.debug("Created service: " + 'Dummy-Timer-' + config.name.replace(/\s/g, '-'))
-        this.timerRepresentative = platform.addService(api.hap.Service.Lightbulb, 'Dummy-Timer-' + config.name.replace(/\s/g, '-'), 'timer')
-        // new DummyTimer(log, timer, api, this.accessories[0]);
+        this.timerRepresentative = platform.addService(api.hap.Service.Lightbulb, config.name, 'timer')
     }
-  this.modelString = "Dummy Timer";
+    this.modelString = "Adjustable Dummy Timer";
   
 
     this.Service = api.hap.Service;
     this.Characteristic = api.hap.Characteristic;
-//   this.informationService = new Service.AccessoryInformation();
-//   this.informationService
-//     .setCharacteristic(Characteristic.Manufacturer, 'Homebridge')
-//     .setCharacteristic(Characteristic.Model, this.modelString)
-//     .setCharacteristic(Characteristic.FirmwareRevision, HomebridgeDummyVersion)
-//     .setCharacteristic(Characteristic.SerialNumber, 'Dummy-Timer-' + this.name.replace(/\s/g, '-'));
+    
+    
+  
 
+    this.platform.getService(this.Service.AccessoryInformation)
+        .setCharacteristic(this.Characteristic.Manufacturer, "mksvrcek")
+        .setCharacteristic(this.Characteristic.Model, "Adaptable Dummy Timer")
+        .setCharacteristic(this.Characteristic.SerialNumber, api.hap.uuid.generate(this.name))
+        .setCharacteristic(this.Characteristic.FirmwareRevision, HomebridgeDummyVersion)
+    
 //   this.cacheDirectory = HomebridgeAPI.user.persistPath();
 //   this.storage = require('node-persist');
 //   this.storage.initSync({ dir: this.cacheDirectory, forgiveParseErrors: true });
@@ -110,21 +127,14 @@ class DummyTimer {
     .on('get', this._getBrightness.bind(this))
     .on('set', this._setBrightness.bind(this));
 	
-//   var cachedBrightness = this.storage.getItemSync(this.brightnessStorageKey);
-//   if ((cachedBrightness == undefined) || cachedBrightness == 0) {
+  var cachedBrightness = this.platform.context.cachedBrightness;
+  if ((cachedBrightness == undefined) || cachedBrightness == 0) {
       this.timerRepresentative.setCharacteristic(this.Characteristic.On, false);
       this.timerRepresentative.setCharacteristic(this.Characteristic.Brightness, 0);
-//   } else {
-//       this._service.setCharacteristic(Characteristic.On, true);
-//       this._service.setCharacteristic(Characteristic.Brightness, cachedBrightness);
-//   }
-
-//   var cachedState = this.storage.getItemSync(this.name);
-//   if((cachedState === undefined) || (cachedState === false)) {
-// 	this._service.setCharacteristic(Characteristic.On, false);
-//       } else {
-// 	this._service.setCharacteristic(Characteristic.On, true);
-//   }
+  } else {
+      this.timerRepresentative.setCharacteristic(this.Characteristic.On, true);
+      this.timerRepresentative.setCharacteristic(this.Characteristic.Brightness, cachedBrightness);
+  }
 
   this.getSensorState = () => {
 	const state = this.sensorTriggered
@@ -134,99 +144,73 @@ class DummyTimer {
    }
    
    
+   this._checkIfSensorChanged()
+   
    if (this.sensor != "off") {
     switch (this.sensor) {
       case 'contact':
-        // this.sensorService = new this.Service.ContactSensor(this.name + ' Trigger')
         
         this.sensorCharacteristic = this.Characteristic.ContactSensorState
-        this.sensorService = this.platform.getService('Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
+        this.sensorService = this.platform.getService(this.name + " Contact Trigger")
         if (!this.sensorService) {
             log.debug("Created service: " + 'Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
-            this.sensorService = this.platform.addService(api.hap.Service.ContactSensor, 'Dummy-Timer-' + config.name.replace(/\s/g, '-'), 'timer-trigger')
+            this.sensorService = this.platform.addService(api.hap.Service.ContactSensor, this.name + " Contact Trigger", 'timer-trigger')
         }
         
         break
       case 'occupancy':
-        // this.sensorService = new this.Service.OccupancySensor(this.name + ' Trigger')
         
         this.sensorCharacteristic = this.Characteristic.OccupancyDetected
-        this.sensorService = this.platform.getService('Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
+        this.sensorService = this.platform.getService(this.name + " Occupancy Trigger")
         if (!this.sensorService) {
             log.debug("Created service: " + 'Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
-            this.sensorService = this.platform.addService(api.hap.Service.OccupancySensor, 'Dummy-Timer-' + config.name.replace(/\s/g, '-'), 'timer-trigger')
+            this.sensorService = this.platform.addService(api.hap.Service.OccupancySensor, this.name + " Occupancy Trigger", 'timer-trigger')
         }
         
         break
       case 'leak':
-        this.sensorService = new this.Service.LeakSensor(this.name + ' Trigger')
-        this.sensorCharacteristic = Characteristic.LeakDetected
+       
+        this.sensorCharacteristic = this.Characteristic.LeakDetected
+        this.sensorService = this.platform.getService(this.name + " Leak Trigger")
+        if (!this.sensorService) {
+            log.debug("Created service: " + this.name + " Leak Trigger")
+            this.sensorService = this.platform.addService(api.hap.Service.LeakSensor, this.name + " Leak Trigger", 'timer-trigger')
+        }
+        
         break
       default:
-        this.sensorService = new this.Service.MotionSensor(this.name + ' Trigger')
+       
         this.sensorCharacteristic = this.Characteristic.MotionDetected
+        this.sensorService = this.platform.getService(this.name + " Motion Trigger")
+        if (!this.sensorService) {
+            log.debug("Created service: " + this.name + " Leak Trigger")
+            this.sensorService = this.platform.addService(api.hap.Service.MotionSensor, this.name + " Motion Trigger", 'timer-trigger')
+        }
         break
       }
-  
+     
       this.sensorService
         .getCharacteristic(this.sensorCharacteristic)
         .on('get', (callback) => {
           callback(null, this.getSensorState())
         })
-  }
+     }
    
    
     }
 }
 
-// DummyTimer.prototype.getServices = function () {
-//   var services = [this.informationService, this._service];
 
-//   if (this.sensor != "off") {
-//     switch (this.sensor) {
-//       case 'contact':
-//         // this.sensorService = new this.Service.ContactSensor(this.name + ' Trigger')
-        
-//         this.sensorCharacteristic = this.Characteristic.ContactSensorState
-//         this.sensorService = this.platform.getService('Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
-//         if (!this.sensorService) {
-//             log.debug("Created service: " + 'Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
-//             this.sensorService = this.platform.addService(api.hap.Service.ContactSensor, 'Dummy-Timer-' + config.name.replace(/\s/g, '-'), 'timer')
-//         }
-        
-//         break
-//       case 'occupancy':
-//         // this.sensorService = new this.Service.OccupancySensor(this.name + ' Trigger')
-        
-//         this.sensorCharacteristic = this.Characteristic.OccupancyDetected
-//         this.sensorService = this.platform.getService('Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
-//         if (!this.sensorService) {
-//             log.debug("Created service: " + 'Dummy-Timer-Trigger-' + this.name.replace(/\s/g, '-'))
-//             this.sensorService = this.platform.addService(api.hap.Service.OccupancySensor, 'Dummy-Timer-' + config.name.replace(/\s/g, '-'), 'timer')
-//         }
-        
-//         break
-//       case 'leak':
-//         this.sensorService = new this.Service.LeakSensor(this.name + ' Trigger')
-//         this.sensorCharacteristic = Characteristic.LeakDetected
-//         break
-//       default:
-//         this.sensorService = new this.Service.MotionSensor(this.name + ' Trigger')
-//         this.sensorCharacteristic = this.Characteristic.MotionDetected
-//         break
-//       }
-  
-//       this.sensorService
-//         .getCharacteristic(this.sensorCharacteristic)
-//         .on('get', (callback) => {
-//           callback(null, this.getSensorState())
-//         })
-  
-//       services.push(this.sensorService)
-//   }
-
-//   return services;
-// }
+DummyTimer.prototype._checkIfSensorChanged = function () {
+    let contactSensor = this.platform.getService(this.name + " Contact Trigger")
+    if (contactSensor && this.sensor != "contact") { this.platform.removeService(contactSensor); this.log.debug("Removing service: " + this.name + " Contact Trigger"); }
+    let occupancySensor = this.platform.getService(this.name + " Occupancy Trigger")
+    if (occupancySensor && this.sensor != "occupancy") { this.platform.removeService(occupancySensor); this.log.debug("Removing service: " + this.name + " Occupancy Trigger"); }
+    let leakSensor = this.platform.getService(this.name + " Leak Trigger")
+    if (leakSensor && this.sensor != "leak") { this.platform.removeService(leakSensor); this.log.debug("Removing service: " + this.name + " Leak Trigger"); }
+    let motionSensor = this.platform.getService(this.name + " Motion Trigger")
+    if (motionSensor && this.sensor != "motion") { this.platform.removeService(motionSensor); this.log.debug("Removing service: " + this.name + " Motion Trigger"); }
+}
 
 DummyTimer.prototype._getBrightness = function (callback) {
 
@@ -246,7 +230,7 @@ DummyTimer.prototype._setBrightness = function (brightness, callback) {
 
   this.brightness = brightness;
 //   this.storage.setItemSync(this.brightnessStorageKey, brightness);
-
+  this.platform.context.cachedBrightness = brightness;
   callback();
 }
 
@@ -267,6 +251,7 @@ DummyTimer.prototype._setOn = function (on, callback) {
           this.brightness = this.brightness - 1
           this.timerRepresentative.setCharacteristic(this.Characteristic.Brightness, this.brightness);
 	   //   this.storage.setItemSync(this.brightnessStorageKey, this.brightness);
+        this.platform.context.cachedBrightness = this.brightness;
         } else {
           clearInterval(this.timer);
           this.timerRepresentative.setCharacteristic(this.Characteristic.On, false);
@@ -283,11 +268,21 @@ DummyTimer.prototype._setOn = function (on, callback) {
         }
       }.bind(this), this.delay)
     } else {
+        this.platform.context.cachedBrightness = null;
+        this.log.debug("Clear Interval")
       clearInterval(this.timer);
     }
   }
 
 //   this.storage.setItemSync(this.name, on);
-
+    // this.platform.context.cachedState = on;
   callback();
 }
+
+
+
+
+
+
+
+

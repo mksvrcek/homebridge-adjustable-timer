@@ -10,9 +10,10 @@
                   "type": "object",
         "properties": {
             "name": {
-                "title": "Name",
+                "title": "ID (Name)",
                 "type": "string",
-                "required": true
+                "required": true,
+                "description": "Careful! This will be the display name and ID, if changed any Homekit automations will be reset and the plugin will register as a new accessory. You can change the display name in HomeKit without losing any data."
             },
             "brightness": {
                 "title": "Brightness",
@@ -57,7 +58,7 @@
             },
             "sensor": {
                 "title": "Enable sensor trigger",
-                "description": "Sets up a separate sensor that triggers when the timer reaches 0, this allows you to turn off the timer without triggering your automations. Alternatively you can setup a separate switch to cancel the timer (see docs). (Warning: Leak sesonr will trigger critical notification by default that ignore silent & focus modes)",
+                "description": "Sets up a separate sensor that triggers when the timer reaches 0, this allows you to turn off the timer without triggering your automations. Alternatively you can setup a separate switch to cancel the timer (see docs). \n\n (Warning: Leak sensor will trigger critical notification by default that ignore silent & focus modes)",
                 "type": "string",
                 "default": "off",
                 "required": true,
