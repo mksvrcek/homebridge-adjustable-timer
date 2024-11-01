@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.4...v1.1.5) (2024-11-01)
+
+
+### Bug Fixes
+
+* Timers starting up unprompted when homebridge restarts ([775609d](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/775609df968c54bff577ca6aa18b14cd8d9371ea))
+
 ## [1.1.4](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.3...v1.1.4) (2024-10-28)
 
 
