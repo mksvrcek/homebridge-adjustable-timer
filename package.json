@@ -6,7 +6,7 @@
   "author": "mksvrcek",
   "homepage": "https://theproductroadmap.co",
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin", "customizable timer accessory", "user adjustable timer"
   ],
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "url": "https://github.com/mksvrcek/homebridge-adjustable-timer/issues"
   },
   "engines": {
-    "node": ">=0.12.0",
+    "node": "^18 || ^20",
     "homebridge": "^1.6.0 || ^2.0.0-beta.0"
   },
   "dependencies": {

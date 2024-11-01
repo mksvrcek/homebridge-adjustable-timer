@@ -95,6 +95,12 @@
                     }
                 ]
             },
+            "pausable": {
+                "title": "Pausable",
+                "type": "boolean",
+                "default": false,
+                "description": "When a pausable switch is turned off it will remember it's last state and continue from there, if it reaches 0 it will restart at the starting brightness set. "
+            },
             "disableLogging": {
                 "title": "DisableLogging",
                 "type": "boolean",
