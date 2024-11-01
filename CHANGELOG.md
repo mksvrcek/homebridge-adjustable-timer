@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.2.0...v2.0.0) (2024-11-01)
+
+
+### Features
+
+* Update to a Platform Accessory ([0a2fca0](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/0a2fca03df256eee343ff24ce6db0f5d57edfa9c))
+
+
+### BREAKING CHANGES
+
+* Changed config structure, timers should now appear in the platform section of config. Any exisiting timers will not work.
+
 # [1.2.0](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.5...v1.2.0) (2024-11-01)
 
 
