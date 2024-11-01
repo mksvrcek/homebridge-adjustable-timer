@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.0...v2.1.1) (2024-11-01)
+
+
+### Bug Fixes
+
+* adjustments for homebridge verification ([116a6e2](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/116a6e2dadd91723ef0dabf2f55559581bfed76a))
+
 # [2.1.0](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.0.0...v2.1.0) (2024-11-01)
 
 
