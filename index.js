@@ -56,33 +56,35 @@ function DummyTimer(log, config) {
 
   this._service.getCharacteristic(Characteristic.On)
     .on('set', this._setOn.bind(this));
+	
   if (this.dimmer) {
     this._service.getCharacteristic(Characteristic.Brightness)
       .on('get', this._getBrightness.bind(this))
       .on('set', this._setBrightness.bind(this));
   }
-
-  if (this.dimmer) {
-    var cachedBrightness = this.storage.getItemSync(this.brightnessStorageKey);
-    if ((cachedBrightness == undefined) || cachedBrightness == 0) {
+	
+  var cachedBrightness = this.storage.getItemSync(this.brightnessStorageKey);
+  if ((cachedBrightness == undefined) || cachedBrightness == 0) {
       this._service.setCharacteristic(Characteristic.On, false);
       this._service.setCharacteristic(Characteristic.Brightness, 0);
-    } else {
+  } else {
       this._service.setCharacteristic(Characteristic.On, true);
       this._service.setCharacteristic(Characteristic.Brightness, cachedBrightness);
-    }
+  }
+
+  var cachedState = this.storage.getItemSync(this.name);
+  if((cachedState === undefined) || (cachedState === false)) {
+	this._service.setCharacteristic(Characteristic.On, false);
+      } else {
+	this._service.setCharacteristic(Characteristic.On, true);
   }
 
   this.getSensorState = () => {
-		const state = this.sensorTriggered
-		// if (this.flipSensor && this.sensorType === 'motion')
-		// 	return !state
-		if (this.sensor === 'motion')
-			return !!state
-		// if (this.flipSensor)
-		// 	return state ^ 1
-		return state
-	}
+	const state = this.sensorTriggered
+	if (this.sensor === 'motion')
+		return !!state
+	return state
+   }	
 }
 
 DummyTimer.prototype.getServices = function () {
@@ -158,6 +160,7 @@ DummyTimer.prototype._setOn = function (on, callback) {
         if (this.brightness > 1) {
           this.brightness = this.brightness - 1
           this._service.setCharacteristic(Characteristic.Brightness, this.brightness);
+	  this.storage.setItemSync(this.brightnessStorageKey, this.brightness);
         } else {
           clearInterval(this.timer);
           this._service.setCharacteristic(Characteristic.On, false);
@@ -177,6 +180,8 @@ DummyTimer.prototype._setOn = function (on, callback) {
       clearInterval(this.timer);
     }
   }
+
+  this.storage.setItemSync(this.name, on);
 
   callback();
 }
