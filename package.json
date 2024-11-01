@@ -5,7 +5,6 @@
   "license": "ISC",
   "author": "mksvrcek",
   "homepage": "https://theproductroadmap.co",
-  "type": "module",
   "keywords": [
     "homebridge-plugin"
   ],
