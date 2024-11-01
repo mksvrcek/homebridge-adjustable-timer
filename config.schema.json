@@ -3,6 +3,15 @@
     "pluginType": "platform",
     "singular": true,
     "schema": {
+        "name": {
+        "title": "Adjustable Timer Plaugin",
+        "type": "string",
+        "required": true,
+        "default": "AdjustableDummyTimerPlatform",
+        "placeholder": "AdjustableDummyTimerPlatform",
+        "minLength": 1,
+        "maxLength": 50
+      	},
       "timers": {
         "description": "Timers to be created.",
         "type": "array",

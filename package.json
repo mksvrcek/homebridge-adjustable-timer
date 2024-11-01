@@ -7,8 +7,10 @@
   "homepage": "https://theproductroadmap.co",
   "keywords": [
     "homebridge-plugin",
-    "customizable timer accessory",
-    "user adjustable timer"
+    "timer",
+    "dummy-switch",
+    "adjustable",
+    "custom"
   ],
   "repository": {
     "type": "git",
