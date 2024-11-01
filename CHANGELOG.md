@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.5...v1.2.0) (2024-11-01)
+
+
+### Bug Fixes
+
+* DO NOT INSTALL ([5f9658e](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/5f9658efa38c5e7853a248a77dd8610a8788e92b))
+
+
+### Features
+
+* DO NOT INSTALL ([f5beac6](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/f5beac6b2b052174493f655716833e529f703ac7))
+
 ## [1.1.5](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v1.1.4...v1.1.5) (2024-11-01)
 
 
