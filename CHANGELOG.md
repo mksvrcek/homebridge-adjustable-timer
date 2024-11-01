@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.1...v2.1.2) (2024-11-01)
+
+
+### Bug Fixes
+
+* adjust the platform name ([2369812](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/23698122d95221cfdb43ae7fb4954c97354cb76d))
+
 ## [2.1.1](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.0...v2.1.1) (2024-11-01)
 
 
