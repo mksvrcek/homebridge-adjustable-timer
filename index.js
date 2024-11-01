@@ -33,7 +33,7 @@ class AdjustableDummyTimerPlatform {
 
         if (!this.accessories.find(accessory => accessory.UUID === uuid)) {
           const platform = new api.platformAccessory(timer.name, uuid);
-          api.registerPlatformAccessories('@theproductroadmap/homebridge-adjustable-timer', 'AdjustableDummyTimerPlatform', [platform])
+          api.registerPlatformAccessories('@theproductroadmap/homebridge-adjustable-timer', config.name, [platform])
           this.accessories.push(platform)
           new DummyTimer(log, timer, api, platform);
         } else {
