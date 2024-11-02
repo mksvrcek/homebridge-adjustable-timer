@@ -3,6 +3,7 @@
     "pluginType": "platform",
     "singular": true,
     "schema": {
+        "type": "object",
         "properties": {
             "name": {
                 "title": "Adjustable Timer Plugin Platform Name",

@@ -5,6 +5,13 @@
   "license": "ISC",
   "author": "mksvrcek",
   "homepage": "https://theproductroadmap.co",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mksvrcek/homebridge-adjustable-timer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mksvrcek/homebridge-adjustable-timer/issues"
+  },
   "keywords": [
     "timer",
     "dummy-switch",
@@ -16,13 +23,6 @@
     "automation",
     "home"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/mksvrcek/homebridge-adjustable-timer.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mksvrcek/homebridge-adjustable-timer/issues"
-  },
   "engines": {
     "node": "^18 || ^20",
     "homebridge": "^1.6.0 || ^2.0.0-beta.0"
