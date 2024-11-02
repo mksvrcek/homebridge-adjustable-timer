@@ -1,3 +1,10 @@
+## [2.1.4](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.3...v2.1.4) (2024-11-02)
+
+
+### Bug Fixes
+
+* Changes to config schema, name is now nested under properties! ([7aea4cb](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/7aea4cb19d790c53da467386558efb10addc5c44))
+
 ## [2.1.3](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.2...v2.1.3) (2024-11-01)
 
 
