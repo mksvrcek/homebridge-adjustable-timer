@@ -10,9 +10,8 @@
                 "required": true,
                 "default": "AdjustableDummyTimerPlatform",
                 "description": "Name to use for Homebridge logging purposes. Default: AdjustableDummyTimerPlatform."
-            }
-        },
-        "timers": {
+            },
+            "timers": {
             "description": "Timers to be created.",
             "type": "array",
             "items": {
@@ -118,6 +117,7 @@
                     }
                 }
             }
+        }
         }
     }
 }
