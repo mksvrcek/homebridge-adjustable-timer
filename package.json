@@ -24,7 +24,7 @@
     "home"
   ],
   "engines": {
-    "node": "^18 || ^20",
+    "node": "^18 || ^20 || ^22",
     "homebridge": "^1.6.0 || ^2.0.0-beta.0"
   },
   "dependencies": {
