@@ -1,3 +1,10 @@
+## [2.1.7](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.6...v2.1.7) (2024-11-02)
+
+
+### Bug Fixes
+
+* newer node engine ([d8b5877](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/d8b5877099dc8fa92549bb70e74cae6f6e99bbdc))
+
 ## [2.1.6](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.5...v2.1.6) (2024-11-02)
 
 
