@@ -11,7 +11,10 @@
     "adjustable",
     "custom",
     "homebridge-plugin",
-    "homebridge"
+    "homebridge",
+    "homekit",
+    "automation",
+    "home"
   ],
   "repository": {
     "type": "git",

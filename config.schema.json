@@ -3,119 +3,121 @@
     "pluginType": "platform",
     "singular": true,
     "schema": {
-        "name": {
-            "title": "Adjustable Timer Plugin Platform Name",
-            "type": "string",
-            "required": true,
-            "default": "AdjustableDummyTimerPlatform",
-            "description": "Name to use for Homebridge logging purposes. Default: AdjustableDummyTimerPlatform."
-        },
-      "timers": {
-        "description": "Timers to be created.",
-        "type": "array",
-        "items": {
-                  "type": "object",
         "properties": {
             "name": {
-                "title": "ID (Name)",
+                "title": "Adjustable Timer Plugin Platform Name",
                 "type": "string",
                 "required": true,
-                "description": "Careful! This will be the display name and ID, if changed any Homekit automations will be reset and the plugin will register as a new accessory. You can change the display name in HomeKit without losing any data."
-            },
-            "brightness": {
-                "title": "Brightness",
-                "type": "integer",
-                "default": 0,
-                "placeholder": 0,
-                "maximum": 100,
-                "description": "Starting timer (brightness) everytime the switch is on."
-            },
-            "delayUnit": {
-                "title": "Delay Time Unit",
-                "description": "Delay Time Unit (milliseconds/seconds/minutes/hours/days).",
-                "type": "string",
-                "default": "m",
-                "required": true,
-                "oneOf": [
-                    {
-                        "title": "seconds",
-                        "enum": [
-                            "s"
+                "default": "AdjustableDummyTimerPlatform",
+                "description": "Name to use for Homebridge logging purposes. Default: AdjustableDummyTimerPlatform."
+            }
+        },
+        "timers": {
+            "description": "Timers to be created.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "ID (Name)",
+                        "type": "string",
+                        "required": true,
+                        "description": "Careful! This will be the display name and ID, if changed any Homekit automations will be reset and the plugin will register as a new accessory. You can change the display name in HomeKit without losing any data."
+                    },
+                    "brightness": {
+                        "title": "Brightness",
+                        "type": "integer",
+                        "default": 0,
+                        "placeholder": 0,
+                        "maximum": 100,
+                        "description": "Starting timer (brightness) everytime the switch is on."
+                    },
+                    "delayUnit": {
+                        "title": "Delay Time Unit",
+                        "description": "Delay Time Unit (milliseconds/seconds/minutes/hours/days).",
+                        "type": "string",
+                        "default": "m",
+                        "required": true,
+                        "oneOf": [
+                            {
+                                "title": "seconds",
+                                "enum": [
+                                    "s"
+                                ]
+                            },
+                            {
+                                "title": "minutes",
+                                "enum": [
+                                    "m"
+                                ]
+                            },
+                            {
+                                "title": "hours",
+                                "enum": [
+                                    "h"
+                                ]
+                            },
+                            {
+                                "title": "days",
+                                "enum": [
+                                    "d"
+                                ]
+                            }
                         ]
                     },
-                    {
-                        "title": "minutes",
-                        "enum": [
-                            "m"
+                    "sensor": {
+                        "title": "Enable sensor trigger",
+                        "description": "Sets up a separate sensor that triggers when the timer reaches 0, this allows you to turn off the timer without triggering your automations. Alternatively you can setup a separate switch to cancel the timer (see docs). \n\n (Warning: Leak sensor will trigger critical notification by default that ignore silent & focus modes)",
+                        "type": "string",
+                        "default": "off",
+                        "required": true,
+                        "oneOf": [
+                            {
+                                "title": "Motion Sensor",
+                                "enum": [
+                                    "motion"
+                                ]
+                            },
+                            {
+                                "title": "Contact Sensor",
+                                "enum": [
+                                    "contact"
+                                ]
+                            },
+                            {
+                                "title": "Occupancy Sensor",
+                                "enum": [
+                                    "occupancy"
+                                ]
+                            },
+                            {
+                                "title": "Leak Sensor",
+                                "enum": [
+                                    "leak"
+                                ]
+                            },
+                            {
+                                "title": "Off (No sensor)",
+                                "enum": [
+                                    "off"
+                                ]
+                            }
                         ]
                     },
-                    {
-                        "title": "hours",
-                        "enum": [
-                            "h"
-                        ]
+                    "pausable": {
+                        "title": "Pausable",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "When a pausable switch is turned off it will remember it's last state and continue from there, if it reaches 0 it will restart at the starting brightness set. "
                     },
-                    {
-                        "title": "days",
-                        "enum": [
-                            "d"
-                        ]
+                    "disableLogging": {
+                        "title": "DisableLogging",
+                        "type": "boolean",
+                        "default": false,
+                        "description": "No state change information (On/Off) will be logged. "
                     }
-                ]
-            },
-            "sensor": {
-                "title": "Enable sensor trigger",
-                "description": "Sets up a separate sensor that triggers when the timer reaches 0, this allows you to turn off the timer without triggering your automations. Alternatively you can setup a separate switch to cancel the timer (see docs). \n\n (Warning: Leak sensor will trigger critical notification by default that ignore silent & focus modes)",
-                "type": "string",
-                "default": "off",
-                "required": true,
-                "oneOf": [
-                    {
-                        "title": "Motion Sensor",
-                        "enum": [
-                            "motion"
-                        ]
-                    },
-                    {
-                        "title": "Contact Sensor",
-                        "enum": [
-                            "contact"
-                        ]
-                    },
-                    {
-                        "title": "Occupancy Sensor",
-                        "enum": [
-                            "occupancy"
-                        ]
-                    },
-                    {
-                        "title": "Leak Sensor",
-                        "enum": [
-                            "leak"
-                        ]
-                    },
-                    {
-                        "title": "Off (No sensor)",
-                        "enum": [
-                            "off"
-                        ]
-                    }
-                ]
-            },
-            "pausable": {
-                "title": "Pausable",
-                "type": "boolean",
-                "default": false,
-                "description": "When a pausable switch is turned off it will remember it's last state and continue from there, if it reaches 0 it will restart at the starting brightness set. "
-            },
-            "disableLogging": {
-                "title": "DisableLogging",
-                "type": "boolean",
-                "default": false,
-                "description": "No state change information (On/Off) will be logged. "
+                }
             }
         }
-        }
-      }
     }
 }
