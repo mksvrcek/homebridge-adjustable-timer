@@ -1,3 +1,10 @@
+## [2.1.8](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.7...v2.1.8) (2025-01-29)
+
+
+### Bug Fixes
+
+* error logging when required variables are missing ([8dbbfa9](https://github.com/mksvrcek/homebridge-adjustable-timer/commit/8dbbfa919d830deb059ae2773a30fc777514e0e5))
+
 ## [2.1.7](https://github.com/mksvrcek/homebridge-adjustable-timer/compare/v2.1.6...v2.1.7) (2024-11-02)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@theproductroadmap/homebridge-adjustable-timer",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "Dummy switches for Homebridge: https://github.com/mksvrcek/homebridge-adjustable-timer",
   "license": "ISC",
   "author": "mksvrcek",
@@ -35,10 +35,10 @@
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^11.0.0",
+    "@semantic-release/github": "^11.0.1",
     "@semantic-release/npm": "^12.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.1"
+    "@semantic-release/release-notes-generator": "^14.0.3"
   }
 }
