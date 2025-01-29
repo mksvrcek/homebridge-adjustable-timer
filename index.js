@@ -27,20 +27,23 @@ class AdjustableDummyTimerPlatform {
       const currentAccessoryUUIDs = [];
 
       config.timers.forEach((timer) => {
-        this.log("Initializing " + timer.name);
-        const uuid = api.hap.uuid.generate(timer.name);
-        currentAccessoryUUIDs.push(uuid);
-
-        if (!this.accessories.find(accessory => accessory.UUID === uuid)) {
-          const platform = new api.platformAccessory(timer.name, uuid);
-          api.registerPlatformAccessories('@theproductroadmap/homebridge-adjustable-timer', config.name, [platform])
-          this.accessories.push(platform)
-          new DummyTimer(log, timer, api, platform);
+        this.log("Initializing timer: " + timer.name);
+        if (timer.name && timer.delayUnit && timer.sensor) {
+          const uuid = api.hap.uuid.generate(timer.name);
+          currentAccessoryUUIDs.push(uuid);
+  
+          if (!this.accessories.find(accessory => accessory.UUID === uuid)) {
+            const platform = new api.platformAccessory(timer.name, uuid);
+            api.registerPlatformAccessories('@theproductroadmap/homebridge-adjustable-timer', config.name, [platform])
+            this.accessories.push(platform)
+            new DummyTimer(log, timer, api, platform);
+          } else {
+            let platform = this.accessories.find(accessory => accessory.UUID === uuid);
+            new DummyTimer(log, timer, api, platform);
+          }
         } else {
-          let platform = this.accessories.find(accessory => accessory.UUID === uuid);
-          new DummyTimer(log, timer, api, platform);
+          this.log("Failed to initialize timer, one or more required variables are missing. (Required variables: name, delayUnit, sensor)")
         }
-
       });
 
       // Unregister accessories not present in the config
