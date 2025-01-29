@@ -42,7 +42,7 @@ class AdjustableDummyTimerPlatform {
             new DummyTimer(log, timer, api, platform);
           }
         } else {
-          this.log("Failed to initialize timer, one or more required variables are missing. (Required variables: name, delayUnit, sensor)")
+          log.error("Failed to initialize timer, one or more required variables are missing. (Required variables: name, delayUnit, sensor)")
         }
       });
 
